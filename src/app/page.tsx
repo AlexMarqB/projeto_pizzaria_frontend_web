@@ -3,21 +3,21 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/form/input";
 import { AuthContext } from "@/contexts/authContext";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-export default function Home() {
+export default function Login() {
 	const router = useRouter();
+	const { signIn } = useContext(AuthContext);
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	const [isLoading, setLoading] = useState(false)
-
-	const { signIn } = useContext(AuthContext);
+	const [isLoading, setLoading] = useState(false);
 
 	const handleSubmit = async () => {
 		if (!email || email === "" || !password || password === "") {
-			alert("Missing data!");
+			toast.error("Preencha todos os dados!");
 			return;
 		}
 

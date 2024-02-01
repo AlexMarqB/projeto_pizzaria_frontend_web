@@ -3,40 +3,50 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/form/input";
 import { AuthContext } from "@/contexts/authContext";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Register() {
-    const router = useRouter()
+	const { signUp } = useContext(AuthContext);
 
-	const [name, setName] = useState("")
-	const [email, setEmail] = useState("")
-	const [password, setPassword] = useState("")
-	const [confPassword, setConfPassword] = useState("")
+	const router = useRouter();
 
-	const [isLoading, setIsLoading] = useState(false)
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [confPassword, setConfPassword] = useState("");
 
-    const navigate = (link: string) => {
-        router.push(link)
-    }
+	const [isLoading, setIsLoading] = useState(false);
 
-	const { signUp } = useContext(AuthContext)
+	const navigate = (link: string) => {
+		router.push(link);
+	};
 
 	const handleSubmit = async () => {
-		if(!name || name === "" || !email || email === "" || !password || password === "" || !confPassword || confPassword === "") {
-			alert("Missing data")
-			return
+		if (
+			!name ||
+			name === "" ||
+			!email ||
+			email === "" ||
+			!password ||
+			password === "" ||
+			!confPassword ||
+			confPassword === ""
+		) {
+			toast.error("Preencha todos os dados! ");
+			return;
 		}
 
-		if(password !== confPassword) {
-			alert("Passwords do not match")
-			return
+		if (password !== confPassword) {
+			toast.error("Senhas digitadas não correspondem! ");
+			return;
 		}
 
-		setIsLoading(true)
+		setIsLoading(true);
 
-		await signUp({name, email, password})
+		await signUp({ name, email, password });
 
-		setIsLoading(false)
+		setIsLoading(false);
 	};
 
 	return (
@@ -48,18 +58,46 @@ export default function Register() {
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
-					handleSubmit()
+					handleSubmit();
 				}}
-				className="flex flex-col justify-center items-center gap-4 md:w-72 lg:w-[330px] xl:w-[400px]"
+				className="flex flex-col justify-center items-center gap-4 md:max-w-72 lg:max-w-[330px] xl:max-w-[400px]"
 			>
-				<Input type="text" id="nome" placeholder="Nome da empresa" value={name} onChange={(e) => setName(e.target.value)}/>
-				<Input type="email" id="email" placeholder="Digite seu email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-				<Input type="password" id="password" placeholder="Sua senha" value={password} onChange={(e) => setPassword(e.target.value)}/>
-				<Input type="password" id="confPassword" placeholder="Confirme a senha" value={confPassword} onChange={(e) => setConfPassword(e.target.value)}/>
+				<Input
+					type="text"
+					id="nome"
+					placeholder="Nome da empresa"
+					value={name}
+					onChange={(e) => setName(e.target.value)}
+				/>
+				<Input
+					type="email"
+					id="email"
+					placeholder="Digite seu email"
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
+				/>
+				<Input
+					type="password"
+					id="password"
+					placeholder="Sua senha"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+				/>
+				<Input
+					type="password"
+					id="confPassword"
+					placeholder="Confirme a senha"
+					value={confPassword}
+					onChange={(e) => setConfPassword(e.target.value)}
+				/>
 				<Button loading={isLoading} color="red" type="submit">
 					Acessar
 				</Button>
-				<button className="text-white-100" type="button" onClick={() => navigate('/')}>
+				<button
+					className="text-white-100"
+					type="button"
+					onClick={() => navigate("/")}
+				>
 					Já possuo uma conta.
 				</button>
 			</form>
