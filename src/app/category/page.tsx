@@ -2,14 +2,12 @@
 import { Button } from "@/components/button";
 import { Input } from "@/components/form/input";
 import { Header } from "@/components/header";
-import { AuthContext } from "@/contexts/authContext";
 import { setupAPIClient } from "@/services/api";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Category() {
-
 	const router = useRouter();
 
 	const [name, setName] = useState("");

@@ -3,35 +3,17 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/form/input";
 import { Header } from "@/components/header";
 import { setupAPIClient } from "@/services/api";
-import { Upload } from "lucide-react";
-import { ChangeEvent, useState } from "react";
+import { Loader2, Upload } from "lucide-react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import type { InferGetStaticPropsType, GetStaticProps } from "next";
-import { getStaticProps } from "next/dist/build/templates/pages";
 
 type CategoryProps = {
 	id: string;
 	name: string;
 };
 
-export const getCategories: GetStaticProps<{ categories: CategoryProps[] }> =
-	(async (context) => {
-		const apiClient = setupAPIClient();
-		try {
-			const response = await apiClient.get<CategoryProps[]>("/category");
-            console.log(response.data)
-			const categories = response.data;
-			return { props: { categories } };
-		} catch {
-			toast.error("Falha ao listar categorias! ");
-			return { props: { categories: [] } };
-		}
-	}) satisfies GetStaticProps<{ categories: CategoryProps[] }>;
-
-export default function Product(props: InferGetStaticPropsType<typeof getStaticProps>) {
-    const JSONCategories = JSON.stringify(props)
-    console.log(props)
-    console.log(JSONCategories)
+export default function Product() {
+	const [categoryList, setCategoryList] = useState<CategoryProps[]>([]);
 
 	const [category, setCategory] = useState("");
 	const [name, setName] = useState("");
@@ -60,6 +42,20 @@ export default function Product(props: InferGetStaticPropsType<typeof getStaticP
 		}
 	}
 
+	const apiClient = setupAPIClient();
+
+	const getCategories = async () => {
+		try {
+			const response = await apiClient.get("/category");
+			const categories = response.data;
+			if (categories.length > 0) {
+				setCategoryList(categories);
+			}
+		} catch {
+			toast.error("Erro ao listar categorias! ");
+		}
+	};
+
 	const handleSubmit = async () => {
 		const apiClient = setupAPIClient();
 		if (name === "" || value === "" || description === "") {
@@ -82,26 +78,16 @@ export default function Product(props: InferGetStaticPropsType<typeof getStaticP
 					setName("");
 				});
 		} catch {
-			toast.error("Categoria já existe! ");
+			toast.error("Produto já existe! ");
 			setIsLoading(false);
 		}
 	};
 
-    async function getCat() {
-        const apiClient = setupAPIClient();
-		try {
-			const response = await apiClient.get<CategoryProps[]>("/category");
-            console.log(response.data)
-			const categories = response.data;
-            console.log(categories)
-			return categories;
-		} catch {
-			toast.error("Falha ao listar categorias! ");
-			return 
-		}
-    }
+	useEffect(() => {
+		getCategories();
+	});
 
-	return (
+	return categoryList.length > 0 ? (
 		<>
 			<Header />
 			<div className="flex w-full h-screen justify-center items-center">
@@ -136,11 +122,11 @@ export default function Product(props: InferGetStaticPropsType<typeof getStaticP
 						value={category}
 						onChange={(e) => setCategory(e.target.value)}
 					>
-						{/* {categories.map((item) => (
+						{categoryList.map((item) => (
 							<option key={item.id} value={item.name}>
 								{item.name}
 							</option>
-						))} */}
+						))}
 					</select>
 					<Input
 						type="text"
@@ -164,8 +150,11 @@ export default function Product(props: InferGetStaticPropsType<typeof getStaticP
 						Cadastrar
 					</Button>
 				</form>
-                <button type="button" onClick={() => getCat()}>Fetch</button>
 			</div>
 		</>
+	) : (
+		<div className="flex w-full h-screen justify-center items-center">
+			<Loader2 className="w-10 h-10 text-white-100 animate-spin" />
+		</div>
 	);
 }

@@ -1,7 +1,7 @@
 "use client";
 import { signOut } from "@/contexts/authContext";
 import { LogOut } from "lucide-react";
-import {  useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "../button";
 
 export function Header() {
@@ -23,7 +23,11 @@ export function Header() {
 				<Button type="button" onClick={() => navigate("/")}>
 					Cardápio
 				</Button>
-				<LogOut className="w-7 h-7 hover:cursor-pointer transform transition hover:scale-125 ease-in-out" type="button" onClick={() => signOut()}/>
+				<LogOut
+					className="w-7 h-7 hover:cursor-pointer transform transition hover:scale-125 ease-in-out"
+					type="button"
+					onClick={() => signOut()}
+				/>
 			</div>
 		</header>
 	);
