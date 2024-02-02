@@ -60,7 +60,7 @@ export default function Register() {
 					e.preventDefault();
 					handleSubmit();
 				}}
-				className="flex flex-col justify-center items-center gap-4 md:max-w-72 lg:max-w-[330px] xl:max-w-[400px]"
+				className="flex flex-col justify-center items-center gap-4 md:w-72 lg:w-[330px] xl:w-[400px]"
 			>
 				<Input
 					type="text"
