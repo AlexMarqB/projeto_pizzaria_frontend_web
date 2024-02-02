@@ -37,7 +37,7 @@ export default function Category() {
 	return (
 		<div className="flex w-full h-screen justify-center items-center">
 			<form
-				className="flex flex-col w-1/3 gap-3 items-center text-left"
+				className="flex flex-col w-2/3 xl:w-1/3 gap-3 items-center text-left"
 				onSubmit={(e) => {
 					e.preventDefault();
 					handleSubmit();

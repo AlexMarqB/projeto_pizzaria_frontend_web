@@ -4,24 +4,24 @@ import { ComponentProps } from "react";
 type ButtonProps = ComponentProps<"button"> & {
 	color?: "green" | "red" | "ghost";
 	loading?: boolean;
-	className?: string;
+	classNames?: string;
 };
 
 export function Button({
 	loading = false,
 	color = "ghost",
-	className = "",
+	classNames = "",
 	...props
 }: ButtonProps) {
 	return !loading ? (
 		<button
-			className={`${className} transform transition hover:scale-105 ease-in-out text-center items-center justify-center ${
+			className={`${classNames} transform transition hover:scale-105 ease-in-out text-center items-center justify-center ${
 				color === "red"
 					? "bg-red-100 text-white-100 w-full"
 					: color === "green"
 					? "bg-green-100 text-blue-200 w-full"
 					: "text-white-200 text-[22px] md:text-[26px] lg:text-[25px] xl:text-[25px]"
-			} h-10 md:h-[36px] lg:h-[40px] xl:h-[43px] text-sm md:text-[14px] lg:text-[16px] xl:text-[18px]`}
+			} h-10 md:h-[36px] lg:h-[40px] xl:h-[43px] text-base md:text-[16px] lg:text-[16px] xl:text-[18px]`}
 			{...props}
 		/>
 	) : (

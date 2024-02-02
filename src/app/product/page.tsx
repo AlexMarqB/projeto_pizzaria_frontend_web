@@ -38,6 +38,8 @@ export default function Product() {
 		if (img.type === "image/jpeg" || img.type === "image/png") {
 			setFile(img);
 			setFileURL(URL.createObjectURL(e.target.files[0]));
+		} else {
+			toast.error("Tipo de arquivo da imagem deve ser JPEG ou PNG! ")
 		}
 	}
 
@@ -97,13 +99,13 @@ export default function Product() {
 	return categoryList.length > 0 ? (
 		<div className="flex w-full h-screen justify-center items-center">
 			<form
-				className="flex flex-col w-1/3 gap-3 items-center text-left"
+				className="flex flex-col pt-5 xl:w-1/3 gap-3 items-center text-left"
 				onSubmit={(e) => {
 					e.preventDefault();
 					handleSubmit();
 				}}
 			>
-				<h1 className="w-full font-semibold text-white-100 text-[22px] md:text-[28px] lg:text-[32px] xl:text-[38px]">
+				<h1 className="w-full font-semibold text-white-100 text-[18px] md:text-[28px] lg:text-[32px] xl:text-[38px]">
 					Novo produto
 				</h1>
 

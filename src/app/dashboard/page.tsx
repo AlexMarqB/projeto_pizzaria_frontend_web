@@ -30,7 +30,7 @@ export default function Dashboard() {
 
 	return (
 		<div className="flex flex-col w-full h-screen justify-center items-center">
-			<div className="grid grid-cols-1 gap-4 w-1/3">
+			<div className="grid grid-cols-1 gap-4 xl:w-1/3">
 				<div className="flex items-center mr-auto w-full gap-2 text-left">
 					<h1 className="text-white-100 font-[700] text-[22px] md:text-[28px] lg:text-[32px] xl:text-[38px]">
 						Ultimos Pedidos
