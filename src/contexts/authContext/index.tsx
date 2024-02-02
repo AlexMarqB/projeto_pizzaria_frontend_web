@@ -77,7 +77,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
 			router.push("/");
 		} catch (err) {
 			toast.error("Erro ao cadastrar!");
-			alert(`Error creating user ${err}`);
+			console.log(`Error creating user ${err}`);
 		}
 	}
 
