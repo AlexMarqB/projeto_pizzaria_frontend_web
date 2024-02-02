@@ -25,6 +25,7 @@ export default function RootLayout({
 		<html lang="pt-br">
 			<body className={`${roboto.className} bg-blue-100`}>
 				<AuthContextProvider>
+					<Header />
 					<main>{children}</main>
 					<ToastContainer autoClose={3000} />
 				</AuthContextProvider>

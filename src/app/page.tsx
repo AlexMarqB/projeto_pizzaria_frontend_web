@@ -3,7 +3,7 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/form/input";
 import { AuthContext } from "@/contexts/authContext";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Login() {
@@ -23,7 +23,12 @@ export default function Login() {
 
 		setLoading(true);
 
-		await signIn({ email, password });
+		try {
+			await signIn({ email, password });
+		} catch {
+			toast.error("Email ou senha incorretos! ")
+			setPassword("")
+		}
 
 		setLoading(false);
 	};
